@@ -14,4 +14,4 @@ Original phone-video proportions are retained over softly blurred extensions. Fo
 
 Local edit resources are retained in `.work/film60/`, including `render-film.mjs`, `film-plan.json`, `narration.txt`, speech timings, source downloads, individual scenes, and review frames. These working assets are excluded from publication. The public site uses a fixed film source so uploads to `content/video` do not unexpectedly replace the narration or invalidate its captions.
 
-The website exposes this film near the start of the homepage, offers chapter buttons, a transcript, and a captioned download. No video or sound autoplays.
+The homepage and Our Team page both show the one-minute film with its matching poster and captions. The homepage also offers chapter buttons. Download links and the transcript panel are not displayed. No video or sound autoplays.
