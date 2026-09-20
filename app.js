@@ -58,14 +58,36 @@ document.querySelectorAll('a[href="#estimate"]').forEach(link => link.addEventLi
 
 const heroPhoto = document.querySelector('#hero-project-photo');
 let heroSlides = [
-  { image: 'assets/residential.jpg', alt: 'Finished residential interior with warm neutral walls, white trim, and contrasting stair railings', caption: 'A considered palette.\nA completely different feeling.' },
-  { image: 'assets/hero-house.jpg', alt: 'Freshly painted home exterior with crisp trim and dark shutters', caption: 'A fresh welcome home.\nColor that feels composed.' },
-  { image: 'assets/project-deck-complete.jpg', alt: 'Finished residential deck and porch with fresh light paint', caption: 'A brighter welcome.\nMade for everyday life.' },
-  { image: 'assets/project-room-finish.jpg', alt: 'Residential room with freshly painted walls and clean trim', caption: 'A room reset.\nReady for what comes next.' },
-  { image: 'assets/google-profile-photo.jpg', alt: 'Stone fireplace and dark feature wall in a residential interior project', caption: 'A room with character.\nDetails worth noticing.' },
-  { image: 'assets/project-commercial-wide.jpg', alt: 'Refreshed commercial storefront exterior under a blue sky', caption: 'A sharper storefront.\nReady for business.' },
-  { image: 'assets/project-room-accent.jpg', alt: 'Finished room with a considered painted accent wall', caption: 'A stronger point of view.\nColor that belongs.' },
-  { image: 'assets/restaurant.jpg', alt: 'Warm restaurant interior with finished bar area', caption: 'A space with character.\nMade to welcome people.' }
+  {
+    "image": "assets/residential.jpg",
+    "alt": "Interior painting project with light walls, white trim and black stair railings",
+    "caption": "Interior painting.\nWalls, trim & stair details."
+  },
+  {
+    "image": "assets/hero-house.jpg",
+    "alt": "Painter working on the shutters of a large home exterior",
+    "caption": "Exterior painting.\nSiding, shutters & trim."
+  },
+  {
+    "image": "assets/porch-painting.jpg",
+    "alt": "Fresh gray porch boards, painted railings and a red entry door",
+    "caption": "Porch painting.\nA fresh finish underfoot."
+  },
+  {
+    "image": "assets/interior-finish.jpg",
+    "alt": "Fresh light walls and white baseboards in a residential room",
+    "caption": "Freshly painted walls.\nClean lines at every corner."
+  },
+  {
+    "image": "assets/project-commercial-wide.jpg",
+    "alt": "Commercial storefront painting in progress with masked windows and orange fascia",
+    "caption": "Commercial painting.\nCareful masking. Bold color."
+  },
+  {
+    "image": "assets/trim.jpg",
+    "alt": "Black staircase treads with contrasting white risers and trim",
+    "caption": "Stair & trim painting.\nThe details make the difference."
+  }
 ];
 function renderManagedGallery(images, label) {
   const gallery = document.querySelector('.feature-gallery');
@@ -74,7 +96,9 @@ function renderManagedGallery(images, label) {
 }
 fetch('content/media.json').then(response => response.ok ? response.json() : null).then(media => {
   if (media?.homepage?.length) {
-    heroSlides = media.homepage.map((image, index) => ({ image, alt: `USA For Painting project photo ${index + 1}`, caption: 'A considered finish.\nMade for your space.' }));
+    const existingPhotos = new Set(['google-profile-photo.jpg','hero-house.jpg','project-commercial-wide.jpg','project-deck-complete.jpg','project-room-accent.jpg','project-room-finish.jpg','residential.jpg','restaurant.jpg']);
+    const additions = media.homepage.filter(image => !existingPhotos.has(decodeURIComponent(image.split('/').pop())));
+    heroSlides = heroSlides.concat(additions.map(image => ({ image, alt: 'USA For Painting uploaded project photo', caption: 'From our project collection.\nSee the work up close.' })));
     heroSlides.forEach(slide => { const image = new Image(); image.src = slide.image; });
   }
   if (document.title.startsWith('Our Work')) renderManagedGallery(media?.work, 'Project');
