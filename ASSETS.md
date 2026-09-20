@@ -15,6 +15,14 @@ All project photos below were supplied by the owner in the workspace. Originals 
 | assets/deck-before.jpg | WhatsApp Image 2026-09-19 at 11.29.37 PM (4).jpeg |
 | assets/hero-house.jpg | WhatsApp Image 2026-09-19 at 11.39.00 PM (11).jpeg |
 | assets/google-profile-photo.jpg | USA For PAINTING LLC Google Business Profile photo, accessed September 20, 2026 |
+| assets/project-deck-before.jpg | WhatsApp Image 2026-09-19 at 11.29.52 PM (1).jpeg |
+| assets/project-deck-finish.jpg | WhatsApp Image 2026-09-19 at 11.29.52 PM (7).jpeg |
+| assets/project-deck-complete.jpg | WhatsApp Image 2026-09-19 at 11.29.53 PM.jpeg |
+| assets/project-commercial-wide.jpg | WhatsApp Image 2026-09-19 at 11.30.57 PM (3).jpeg |
+| assets/project-commercial-detail.jpg | WhatsApp Image 2026-09-19 at 11.30.57 PM.jpeg |
+| assets/project-room-finish.jpg | WhatsApp Image 2026-09-19 at 11.32.12 PM (5).jpeg |
+| assets/project-room-accent.jpg | WhatsApp Image 2026-09-19 at 11.32.13 PM.jpeg |
+| assets/project-room-detail.jpg | WhatsApp Image 2026-09-19 at 11.33.18 PM (1).jpeg |
 
 
 Original logo: https://cdn.prod.website-files.com/6493adb9d886523b211bcfe7/6493afefab10c9095a8e67d3_Blue%20House%20Paint%20Store%20Logo.png
