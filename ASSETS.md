@@ -31,3 +31,13 @@ Original logo: https://cdn.prod.website-files.com/6493adb9d886523b211bcfe7/6493a
 Original favicon: https://cdn.prod.website-files.com/6493adb9d886523b211bcfe7/6493bbde9c69f3c304073bb6_favicon.png
 
 Downloaded from the owner-provided reference website on September 20, 2026.
+
+
+## Google Maps media used in the one-minute film
+
+Company listing: https://www.google.com/maps?cid=9132234197117223065. Reviewed September 20, 2026. Selected gallery media is credited to USA For PAINTING LLC in the listing.
+
+- assets/maps-painting-preparation.jpg: owner-posted preparation photo; source https://lh3.googleusercontent.com/gps-cs-s/AHRPTWm_Qdduh_ZA6MuNYOQgDoorlnAV4cN9PfyA4bXc0YQ3OqWWeOPv9TpwPMLiB4lOGJCaMJh4Ioy0n5yGO-vKjsnXsNC-sGxBZmcV5zNki8QPiEc7QgXmjvh22CeLPKjcX2x4id6Wzn57uaw6=s2048
+- assets/maps-wall-preparation.jpg: owner-posted preparation photo; source https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkfPz4yjjEd8liDsN1CIawvSvqvXwrOkwtJSX2Qk_CnX9ocOEXNGnf15UVUfYcnUI3GjFQf7sOhOGDi0AzExcQx_boa4Z8872XVkp9MAOKLQT1UTYNTf79y_6V1apWfgisp4VMRmqnUArgw=s2048
+- Film preparation clips: owner-posted 20-second video (January 2025) and 55-second video (February 2026), gallery positions 1 and 7 at the time of review. Original downloads retained in .work/film60/maps/.
+- Voiceover and original music production notes: VIDEO.md.

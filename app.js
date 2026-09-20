@@ -23,7 +23,7 @@ const homepageReviews = document.querySelector('.featured-comments');
 function renderReviews(entries) {
   const reviewWall = document.title.startsWith('Reviews') ? document.querySelector('.feature-grid') : null;
   if (reviewWall) reviewWall.innerHTML = entries.map(reviewCard).join('');
-  if (homepageReviews) homepageReviews.innerHTML = `${entries.map(reviewCard).join('')}<p class="reviews-note">Selected excerpts from the latest review update. <a href="https://www.google.com/maps?cid=9132234197117223065" target="_blank" rel="noopener noreferrer">Read all reviews on Google ↗</a></p>`;
+  if (homepageReviews) homepageReviews.innerHTML = `${entries.slice(0, 2).map(reviewCard).join('')}<p class="reviews-note">Selected excerpts from the latest review update. <a href="https://www.google.com/maps?cid=9132234197117223065" target="_blank" rel="noopener noreferrer">Read all reviews on Google ↗</a></p>`;
 }
 renderReviews(reviewEntries);
 fetch('content/reviews/reviews.json').then(response => response.ok ? response.json() : null).then(data => {
@@ -104,7 +104,7 @@ fetch('content/media.json').then(response => response.ok ? response.json() : nul
   if (document.title.startsWith('Our Work')) renderManagedGallery(media?.work, 'Project');
   if (document.title.startsWith('Custom Paint Designs')) renderManagedGallery(media?.designs, 'Design');
   const filmSource = document.querySelector('#brand-film source');
-  if (filmSource && media?.video?.length) {
+  if (filmSource && document.querySelector('#brand-film').dataset.managedVideo === 'true' && media?.video?.length) {
     filmSource.src = media.video[0];
     document.querySelector('#brand-film').load();
   }
