@@ -50,29 +50,41 @@ document.querySelectorAll('a[href="#estimate"]').forEach(link => link.addEventLi
   history.replaceState(null, '', '#estimate');
 }));
 
-const heroPhoto = document.querySelector('.hero-visual > img');
+const heroPhoto = document.querySelector('#hero-project-photo');
 const heroSlides = [
   { image: 'assets/residential.jpg', alt: 'Finished residential interior with warm neutral walls, white trim, and contrasting stair railings', caption: 'A considered palette.\nA completely different feeling.' },
   { image: 'assets/hero-house.jpg', alt: 'Freshly painted home exterior with crisp trim and dark shutters', caption: 'A fresh welcome home.\nColor that feels composed.' },
   { image: 'assets/project-deck-complete.jpg', alt: 'Finished residential deck and porch with fresh light paint', caption: 'A brighter welcome.\nMade for everyday life.' },
   { image: 'assets/project-room-finish.jpg', alt: 'Residential room with freshly painted walls and clean trim', caption: 'A room reset.\nReady for what comes next.' },
-  { image: 'assets/google-profile-photo.jpg', alt: 'Stone fireplace and dark feature wall in a residential interior project', caption: 'A room with character.\nDetails worth noticing.' }
+  { image: 'assets/google-profile-photo.jpg', alt: 'Stone fireplace and dark feature wall in a residential interior project', caption: 'A room with character.\nDetails worth noticing.' },
+  { image: 'assets/project-commercial-wide.jpg', alt: 'Refreshed commercial storefront exterior under a blue sky', caption: 'A sharper storefront.\nReady for business.' },
+  { image: 'assets/project-room-accent.jpg', alt: 'Finished room with a considered painted accent wall', caption: 'A stronger point of view.\nColor that belongs.' },
+  { image: 'assets/restaurant.jpg', alt: 'Warm restaurant interior with finished bar area', caption: 'A space with character.\nMade to welcome people.' }
 ];
+heroSlides.forEach(slide => { const image = new Image(); image.src = slide.image; });
+const heroCount = document.querySelector('#hero-project-count');
+let slideIndex = 0;
+function showHeroSlide(nextIndex) {
+  if (!heroPhoto) return;
+  slideIndex = (nextIndex + heroSlides.length) % heroSlides.length;
+  const slide = heroSlides[slideIndex];
+  heroPhoto.classList.add('is-switching');
+  window.setTimeout(() => {
+    heroPhoto.src = slide.image;
+    heroPhoto.alt = slide.alt;
+    const caption = document.querySelector('.hero-photo-caption span');
+    if (caption) caption.innerHTML = slide.caption.replace('\n', '<br>');
+    if (heroCount) heroCount.textContent = `${String(slideIndex + 1).padStart(2, '0')} / ${String(heroSlides.length).padStart(2, '0')}`;
+    heroPhoto.classList.remove('is-switching');
+  }, 280);
+}
+document.querySelector('#hero-previous')?.addEventListener('click', () => showHeroSlide(slideIndex - 1));
+document.querySelector('#hero-next')?.addEventListener('click', () => showHeroSlide(slideIndex + 1));
 if (heroPhoto && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  let slideIndex = 0;
   window.setInterval(() => {
     if (document.hidden) return;
-    slideIndex = (slideIndex + 1) % heroSlides.length;
-    const slide = heroSlides[slideIndex];
-    heroPhoto.classList.add('is-switching');
-    window.setTimeout(() => {
-      heroPhoto.src = slide.image;
-      heroPhoto.alt = slide.alt;
-      const caption = document.querySelector('.hero-photo-caption span');
-      if (caption) caption.innerHTML = slide.caption.replace('\n', '<br>');
-      heroPhoto.classList.remove('is-switching');
-    }, 280);
-  }, 7000);
+    showHeroSlide(slideIndex + 1);
+  }, 5000);
 }
 
 document.querySelectorAll('.filter').forEach(button => {

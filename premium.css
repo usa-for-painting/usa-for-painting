@@ -41,3 +41,5 @@ h2{font-weight:500;letter-spacing:-1.8px}h2 em{color:#647765}
 @media(prefers-reduced-motion:reduce){.project-card img,.film-chapters button{transition:none}}
 @media(max-width:560px){.nav-inner .nav-cta{font-size:10px;padding:11px 12px;gap:12px;white-space:nowrap}.nav-inner{gap:12px}.hero h1{font-size:clamp(46px,14.3vw,56px)}}
 .hero-visual>img{transition:opacity .28s ease,transform .6s}.hero-visual>img.is-switching{opacity:.15}
+.hero-project-controls{position:absolute;right:24px;bottom:15px;display:flex;align-items:center;gap:8px;color:#fff;font-size:9px;letter-spacing:1px}.hero-project-controls button{display:grid;place-items:center;width:30px;height:30px;border:1px solid #ffffff80;background:#132b3acc;color:#fff;font-size:17px;line-height:1}.hero-project-controls button:hover{background:#50afe0;color:#132b3a}.hero-image-credit{right:auto;left:24px}.hero-project-controls+ .hero-image-credit{right:24px;left:auto;bottom:15px;transform:translateY(38px)}
+@media(max-width:560px){.hero-project-controls{right:22px;bottom:17px}.hero-project-controls+ .hero-image-credit{right:22px;bottom:7px;font-size:7px;transform:translateY(30px)}}
