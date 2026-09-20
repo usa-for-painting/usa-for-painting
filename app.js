@@ -1,3 +1,12 @@
+if (!location.hash) {
+  history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+  window.addEventListener('pageshow', () => window.scrollTo(0, 0), { once: true });
+}
+document.querySelectorAll('.topbar-inner > span').forEach(label => {
+  label.innerHTML = '<span class="location-dot" aria-hidden="true"></span> Serving customers across the USA';
+});
+
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('#navigation');
 function closeMenu() {
