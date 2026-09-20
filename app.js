@@ -88,3 +88,28 @@ document.querySelector('#copy-request')?.addEventListener('click', async () => {
 });
 const year = document.querySelector('#year');
 if (year) year.textContent = new Date().getFullYear();
+
+const palettes = {
+  natural: { name: 'Quiet & natural', colors: ['#d9ded5', '#53685b', '#faf6ee'], description: 'A restful mix of soft sage, forest green, and warm white.' },
+  coastal: { name: 'Fresh & coastal', colors: ['#dde6e9', '#345871', '#fffaf0'], description: 'An airy mix of mist, deep blue, and ivory.' },
+  warm: { name: 'Warm & expressive', colors: ['#e7d8c8', '#965c46', '#f7efdf'], description: 'An inviting mix of sand, terracotta, and cream.' }
+};
+let selectedPalette = palettes.natural;
+document.querySelectorAll('[data-palette]').forEach(button => button.addEventListener('click', () => {
+  selectedPalette = palettes[button.dataset.palette];
+  document.querySelectorAll('[data-palette]').forEach(option => {
+    option.classList.toggle('active', option === button);
+    option.setAttribute('aria-pressed', String(option === button));
+  });
+  const preview = document.querySelector('.design-preview');
+  ['wall', 'accent', 'trim'].forEach((name, i) => preview.style.setProperty(`--${name}`, selectedPalette.colors[i]));
+  document.querySelector('#palette-name').textContent = selectedPalette.name;
+  document.querySelector('#palette-description').textContent = selectedPalette.description;
+  document.querySelector('.room-art').setAttribute('aria-label', `Illustrated room: ${selectedPalette.description}`);
+}));
+document.querySelector('#design-cta')?.addEventListener('click', () => {
+  const details = form.elements.details;
+  const idea = `Color inspiration: ${selectedPalette.name}.`;
+  details.value = details.value.replace(/(?:\n)?Color inspiration: (Quiet & natural|Fresh & coastal|Warm & expressive)\./g, '').trim();
+  details.value = `${details.value}${details.value ? '\n' : ''}${idea}`;
+});
