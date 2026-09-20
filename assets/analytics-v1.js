@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const preferenceKey = 'usa-painting-analytics-consent';
-  let measurementId = '', active = false, initialized = false, banner;
+  let measurementId = '', active = false, initialized = false;
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
   const emit = (name, values = {}) => { if (active) gtag('event', name, values); };
@@ -24,7 +24,7 @@
     active = false;
     window['ga-disable-' + measurementId] = true;
     gtag('consent', 'update', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
-    save('declined'); banner.hidden = true;
+    save('declined');
   }
   function installEvents() {
     document.addEventListener('click', event => {
@@ -72,14 +72,14 @@
   fetch('content/analytics.json', { cache: 'no-store' }).then(response => response.ok ? response.json() : null).then(config => {
     if (!/^G-[A-Z0-9]+$/.test(config?.measurementId || '')) return;
     measurementId = config.measurementId;
-    banner = document.createElement('aside'); banner.className = 'analytics-choice'; banner.setAttribute('aria-label', 'Website analytics preferences');
-    banner.innerHTML = '<p><strong>Help us improve your visit.</strong> May we measure which pages and project features are useful? Your estimate details are never included. <a href="privacy.html">Privacy details</a></p><div><button type="button" data-accept>Allow analytics</button><button type="button" data-decline>No thanks</button></div>';
-    document.body.append(banner);
-    banner.querySelector('[data-accept]').addEventListener('click', () => { save('accepted'); banner.hidden = true; enable(); });
-    banner.querySelector('[data-decline]').addEventListener('click', decline);
-    const settings = document.createElement('button'); settings.type = 'button'; settings.className = 'analytics-settings'; settings.textContent = 'Analytics preferences';
-    settings.addEventListener('click', () => { banner.hidden = false; banner.querySelector('button').focus(); });
+    const settings = document.createElement('button'); settings.type = 'button'; settings.className = 'analytics-settings';
+    function updateSettings() { settings.textContent = active ? 'Turn off analytics' : 'Turn on analytics'; }
+    settings.addEventListener('click', () => {
+      if (active) decline(); else { save('accepted'); enable(); }
+      updateSettings();
+    });
     (document.querySelector('footer .container, footer .feature-content') || document.querySelector('footer'))?.append(settings);
-    if (preference() === 'accepted') { banner.hidden = true; enable(); } else if (preference() === 'declined') banner.hidden = true;
+    if (preference() === 'declined') decline(); else enable();
+    updateSettings();
   }).catch(() => {});
 })();
