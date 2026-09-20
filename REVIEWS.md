@@ -15,7 +15,11 @@ Published excerpts were read directly from Google, with spelling retained:
 
 - Dean Allred: “The price was good and the quality was the best.”
 - Jordan Ahamad: “This is the most artistic job I’ve seen.”
+- Khaled: “Very good service and good people, thanks Mr Khaled”
+- Denis King: “This is a good team worker.Thank you for work”
+- gigi abdel: “he does very good work. He had fixed my walls in my house drywall and he had painted it and he did a really good job.”
+- Customer excerpt from the original website: “The work team is clean in its work.”
 
-The fuller rendered evidence is preserved in `.work/google-reviews.txt`. Jordan's review describes work at a masjid; the site labels the topic as artistic work and does not imply it was a residential project. The homepage now features these two selected excerpts immediately after the hero, with reviewer names and links to the original business listing. Previously displayed short comments by Denis King and gigi abdel were replaced, and the repeated estimate-area quote was removed.
+The fuller rendered evidence is preserved in `.work/google-reviews.txt`. Jordan's review describes work at a masjid; the site labels the topic as artistic work and does not imply it was a residential project. The homepage and Reviews page now show six concise, source-labeled excerpts. The final excerpt is retained from the original company website and is labeled separately rather than presented as a Google review.
 
 The website identifies these as selected excerpts, links to all Google reviews, and shows the verification date. The rating is a dated snapshot, not a live feed. No claim that every review is five stars is made. Recheck the live listing before changing numbers. Google displayed a limited view to the unauthenticated browser; the full review collection was not exported.

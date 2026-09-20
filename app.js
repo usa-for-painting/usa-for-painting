@@ -7,6 +7,23 @@ document.querySelectorAll('.topbar-inner > span').forEach(label => {
   label.innerHTML = '<span class="location-dot" aria-hidden="true"></span> Serving customers across the USA';
 });
 
+const reviewEntries = [
+  { topic: 'ON QUALITY & VALUE', quote: 'The price was good and the quality was the best.', name: 'Dean Allred', source: 'Google review' },
+  { topic: 'ON THE ARTISTIC WORK', quote: 'This is the most artistic job I\'ve seen.', name: 'Jordan Ahamad', source: 'Google review' },
+  { topic: 'ON GOOD PEOPLE', quote: 'Very good service and good people, thanks Mr Khaled.', name: 'Khaled', source: 'Google review' },
+  { topic: 'ON TEAMWORK', quote: 'This is a good team worker. Thank you for work.', name: 'Denis King', source: 'Google review' },
+  { topic: 'ON THE FINISHED ROOM', quote: 'He had fixed my walls in my house drywall and he had painted it and he did a really good job.', name: 'gigi abdel', source: 'Google review' },
+  { topic: 'ON CLEAN WORK', quote: 'The work team is clean in its work.', name: 'Customer excerpt', source: 'Original website review' }
+];
+function reviewCard(entry) {
+  const initials = entry.name.split(' ').map(part => part[0]).join('').slice(0, 2).toUpperCase();
+  return `<figure class="review-card"><span class="review-topic">${entry.topic}</span><blockquote>“${entry.quote}”</blockquote><figcaption><span class="review-avatar" aria-hidden="true">${initials}</span><span><strong>${entry.name}</strong><small>${entry.source}</small></span><a href="https://www.google.com/maps?cid=9132234197117223065" target="_blank" rel="noopener noreferrer" aria-label="See ${entry.name}'s review source">↗</a></figcaption></figure>`;
+}
+const reviewWall = document.title.startsWith('Reviews') ? document.querySelector('.feature-grid') : null;
+if (reviewWall) reviewWall.innerHTML = reviewEntries.map(reviewCard).join('');
+const homepageReviews = document.querySelector('.featured-comments');
+if (homepageReviews) homepageReviews.insertAdjacentHTML('afterbegin', reviewEntries.slice(2).map(reviewCard).join(''));
+
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('#navigation');
 function closeMenu() {
