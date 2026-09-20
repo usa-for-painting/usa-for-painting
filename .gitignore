@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.work/
+reference.html
+WhatsApp*
+.DS_Store

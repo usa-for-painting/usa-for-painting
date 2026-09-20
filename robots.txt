@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://usa-for-painting.github.io/usa-for-painting/sitemap.xml

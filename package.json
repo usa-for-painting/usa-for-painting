@@ -1,0 +1,13 @@
+{
+  "name": "usa-for-painting",
+  "version": "1.0.0",
+  "private": true,
+  "description": "USA For Painting — residential and commercial painting in New Castle County, Delaware",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/check.mjs"
+  },
+  "engines": { "node": ">=20" }
+}
