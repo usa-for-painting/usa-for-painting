@@ -231,7 +231,7 @@ document.querySelectorAll('[data-film-time]').forEach(button => button.addEventL
     film.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'center' });
     status.textContent = '';
   } catch {
-    status.textContent = 'Use the video play button to watch the film, or download it from the player.';
+    status.textContent = 'Use the video play button to watch the film.';
   }
 }));
 film?.addEventListener('timeupdate', () => {
