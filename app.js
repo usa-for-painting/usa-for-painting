@@ -29,13 +29,20 @@ document.querySelectorAll('.filter').forEach(button => {
 
 const dialog = document.querySelector('#project-dialog');
 let previousFocus;
-document.querySelectorAll('.project-card').forEach(card => card.addEventListener('click', () => {
-  previousFocus = card;
+let currentProject;
+function showProject(card) {
+  currentProject = card;
   const image = document.querySelector('#dialog-image');
   image.src = card.dataset.image;
   image.alt = card.querySelector('img').alt;
   document.querySelector('#dialog-title').textContent = card.dataset.title;
   document.querySelector('#dialog-description').textContent = card.dataset.description;
+  const visibleProjects = [...document.querySelectorAll('.project-card')].filter(project => !project.hidden);
+  document.querySelector('#project-count').textContent = `${visibleProjects.indexOf(card) + 1} / ${visibleProjects.length} projects`;
+}
+document.querySelectorAll('.project-card').forEach(card => card.addEventListener('click', () => {
+  previousFocus = card;
+  showProject(card);
   dialog.setAttribute('aria-labelledby', 'dialog-title');
   dialog.showModal();
   document.body.classList.add('modal-open');
@@ -51,7 +58,47 @@ dialog?.addEventListener('close', () => {
   document.body.classList.remove('modal-open');
   previousFocus?.focus({ preventScroll: true });
 });
-document.querySelector('#dialog-cta')?.addEventListener('click', () => dialog.close());
+document.querySelector('#dialog-cta')?.addEventListener('click', () => {
+  const details = document.querySelector('[name="details"]');
+  const inspiration = `Project inspiration: ${currentProject.dataset.title}.`;
+  if (!details.value.includes(inspiration)) details.value = `${details.value}${details.value ? '\n' : ''}${inspiration}`;
+  document.querySelector('#service-select').value = currentProject.dataset.category === 'commercial' ? 'Commercial painting' : 'Residential painting';
+  dialog.close();
+});
+function browseProject(direction) {
+  const projects = [...document.querySelectorAll('.project-card')].filter(project => !project.hidden);
+  showProject(projects[(projects.indexOf(currentProject) + direction + projects.length) % projects.length]);
+}
+document.querySelector('#previous-project')?.addEventListener('click', () => browseProject(-1));
+document.querySelector('#next-project')?.addEventListener('click', () => browseProject(1));
+dialog?.addEventListener('keydown', event => {
+  if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+    event.preventDefault();
+    browseProject(event.key === 'ArrowRight' ? 1 : -1);
+  }
+});
+
+const film = document.querySelector('#brand-film');
+document.querySelectorAll('[data-film-time]').forEach(button => button.addEventListener('click', async () => {
+  const status = document.querySelector('#film-status');
+  try {
+    await film.play();
+    film.currentTime = Number(button.dataset.filmTime);
+    film.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'center' });
+    status.textContent = '';
+  } catch {
+    status.textContent = 'Use the video play button to watch the film, or download it from the player.';
+  }
+}));
+film?.addEventListener('timeupdate', () => {
+  const chapters = [...document.querySelectorAll('[data-film-time]')];
+  chapters.forEach((button, index) => {
+    const active = film.currentTime >= Number(button.dataset.filmTime) && (!chapters[index + 1] || film.currentTime < Number(chapters[index + 1].dataset.filmTime));
+    button.classList.toggle('active', active);
+    if (active) button.setAttribute('aria-current', 'true');
+    else button.removeAttribute('aria-current');
+  });
+});
 document.querySelector('.comparison input')?.addEventListener('input', event => {
   event.target.closest('.comparison').style.setProperty('--position', `${event.target.value}%`);
 });

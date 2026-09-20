@@ -35,12 +35,15 @@ If an inbox-based form is preferred later, connect a verified email address to a
 
 - Content, phone, service area, SEO: `index.html`
 - Design and responsive layout: `styles.css`
+- Premium presentation, typography, and responsive refinements: `premium.css`
 - Portfolio filters, modal, before/after slider, SMS form: `app.js`
 - Privacy notice: `privacy.html`
 - Selected original photos and company logo: `assets/`
 - Photo provenance: `ASSETS.md`
 
 No unverified review totals, insurance claims, warranties, or years of experience are published. Photos are actual supplied project images. The before/after photos show the same porch from slightly different viewpoints.
+
+The homepage leads with actual project photography and dated Google review evidence. Project viewer arrows browse the currently filtered collection; its estimate link carries the selected project into the message. Video chapter buttons seek within the existing 30-second film. Neither interaction submits customer information automatically.
 
 ## Hosting later
 
