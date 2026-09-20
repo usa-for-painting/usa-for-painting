@@ -31,12 +31,16 @@ Phone: (302) 452-4001, sourced from the existing Webflow website. The form valid
 
 If an inbox-based form is preferred later, connect a verified email address to a form provider or serverless endpoint, then update privacy information. Never put service secrets in client-side JavaScript.
 
+## Site structure
+
+The homepage is the visual introduction and estimate destination. Primary navigation now opens focused pages instead of stacking every feature into one long scroll: `services.html`, `work.html`, `designs.html`, `team.html`, and `reviews.html`. Each focused page keeps the same header, visual system, owner-supplied project photography, and a direct link back to the homepage estimate form.
+
 ## Editing
 
 - Content, phone, service area, SEO: `index.html`
 - Design and responsive layout: `styles.css`
 - Premium presentation, typography, and responsive refinements: `premium.css`
-- Portfolio filters, modal, before/after slider, SMS form: `app.js`
+- Portfolio filters, modal, inspiration selection, before/after slider, SMS form: `app.js`
 - Privacy notice: `privacy.html`
 - Selected original photos and company logo: `assets/`
 - Photo provenance: `ASSETS.md`

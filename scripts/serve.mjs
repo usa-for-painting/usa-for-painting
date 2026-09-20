@@ -9,7 +9,7 @@ http.createServer(async (request, response) => {
     const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
     const target = path.resolve(root, `.${pathname.endsWith('/') ? `${pathname}index.html` : pathname}`);
     const relative = path.relative(root, target);
-    if (relative.startsWith('..') || path.isAbsolute(relative) || relative.split(path.sep).some(part => part.startsWith('.')) || !['index.html','privacy.html','styles.css','premium.css','app.js','robots.txt','sitemap.xml','assets'].includes(relative.split(path.sep)[0])) {
+    if (relative.startsWith('..') || path.isAbsolute(relative) || relative.split(path.sep).some(part => part.startsWith('.')) || !['index.html','services.html','work.html','designs.html','team.html','reviews.html','privacy.html','styles.css','premium.css','feature.css','app.js','robots.txt','sitemap.xml','assets'].includes(relative.split(path.sep)[0])) {
       response.writeHead(404); response.end('Not found'); return;
     }
     if (!(await stat(target)).isFile()) throw new Error('Not a file');
