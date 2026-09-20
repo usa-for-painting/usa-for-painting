@@ -14,6 +14,7 @@ All project photos below were supplied by the owner in the workspace. Originals 
 | assets/commercial.jpg | WhatsApp Image 2026-09-19 at 11.30.58 PM (8).jpeg |
 | assets/deck-before.jpg | WhatsApp Image 2026-09-19 at 11.29.37 PM (4).jpeg |
 | assets/hero-house.jpg | WhatsApp Image 2026-09-19 at 11.39.00 PM (11).jpeg |
+| assets/google-profile-photo.jpg | USA For PAINTING LLC Google Business Profile photo, accessed September 20, 2026 |
 
 
 Original logo: https://cdn.prod.website-files.com/6493adb9d886523b211bcfe7/6493afefab10c9095a8e67d3_Blue%20House%20Paint%20Store%20Logo.png
