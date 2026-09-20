@@ -19,10 +19,16 @@ function reviewCard(entry) {
   const initials = entry.name.split(' ').map(part => part[0]).join('').slice(0, 2).toUpperCase();
   return `<figure class="review-card"><span class="review-topic">${entry.topic}</span><blockquote>“${entry.quote}”</blockquote><figcaption><span class="review-avatar" aria-hidden="true">${initials}</span><span><strong>${entry.name}</strong><small>${entry.source}</small></span><a href="https://www.google.com/maps?cid=9132234197117223065" target="_blank" rel="noopener noreferrer" aria-label="See ${entry.name}'s review source">↗</a></figcaption></figure>`;
 }
-const reviewWall = document.title.startsWith('Reviews') ? document.querySelector('.feature-grid') : null;
-if (reviewWall) reviewWall.innerHTML = reviewEntries.map(reviewCard).join('');
 const homepageReviews = document.querySelector('.featured-comments');
-if (homepageReviews) homepageReviews.insertAdjacentHTML('afterbegin', reviewEntries.slice(2).map(reviewCard).join(''));
+function renderReviews(entries) {
+  const reviewWall = document.title.startsWith('Reviews') ? document.querySelector('.feature-grid') : null;
+  if (reviewWall) reviewWall.innerHTML = entries.map(reviewCard).join('');
+  if (homepageReviews) homepageReviews.innerHTML = `${entries.map(reviewCard).join('')}<p class="reviews-note">Selected excerpts from the latest review update. <a href="https://www.google.com/maps?cid=9132234197117223065" target="_blank" rel="noopener noreferrer">Read all reviews on Google ↗</a></p>`;
+}
+renderReviews(reviewEntries);
+fetch('content/reviews/reviews.json').then(response => response.ok ? response.json() : null).then(data => {
+  if (data?.reviews?.length) renderReviews(data.reviews);
+}).catch(() => {});
 
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('#navigation');
@@ -51,7 +57,7 @@ document.querySelectorAll('a[href="#estimate"]').forEach(link => link.addEventLi
 }));
 
 const heroPhoto = document.querySelector('#hero-project-photo');
-const heroSlides = [
+let heroSlides = [
   { image: 'assets/residential.jpg', alt: 'Finished residential interior with warm neutral walls, white trim, and contrasting stair railings', caption: 'A considered palette.\nA completely different feeling.' },
   { image: 'assets/hero-house.jpg', alt: 'Freshly painted home exterior with crisp trim and dark shutters', caption: 'A fresh welcome home.\nColor that feels composed.' },
   { image: 'assets/project-deck-complete.jpg', alt: 'Finished residential deck and porch with fresh light paint', caption: 'A brighter welcome.\nMade for everyday life.' },
@@ -61,6 +67,24 @@ const heroSlides = [
   { image: 'assets/project-room-accent.jpg', alt: 'Finished room with a considered painted accent wall', caption: 'A stronger point of view.\nColor that belongs.' },
   { image: 'assets/restaurant.jpg', alt: 'Warm restaurant interior with finished bar area', caption: 'A space with character.\nMade to welcome people.' }
 ];
+function renderManagedGallery(images, label) {
+  const gallery = document.querySelector('.feature-gallery');
+  if (!gallery || !images?.length) return;
+  gallery.innerHTML = images.map((image, index) => `<figure><img src="${image}" alt="USA For Painting ${label} project ${index + 1}" loading="lazy"><figcaption>${label} project ${String(index + 1).padStart(2, '0')} <small>Original project photo</small></figcaption></figure>`).join('');
+}
+fetch('content/media.json').then(response => response.ok ? response.json() : null).then(media => {
+  if (media?.homepage?.length) {
+    heroSlides = media.homepage.map((image, index) => ({ image, alt: `USA For Painting project photo ${index + 1}`, caption: 'A considered finish.\nMade for your space.' }));
+    heroSlides.forEach(slide => { const image = new Image(); image.src = slide.image; });
+  }
+  if (document.title.startsWith('Our Work')) renderManagedGallery(media?.work, 'Project');
+  if (document.title.startsWith('Custom Paint Designs')) renderManagedGallery(media?.designs, 'Design');
+  const filmSource = document.querySelector('#brand-film source');
+  if (filmSource && media?.video?.length) {
+    filmSource.src = media.video[0];
+    document.querySelector('#brand-film').load();
+  }
+}).catch(() => {});
 heroSlides.forEach(slide => { const image = new Image(); image.src = slide.image; });
 const heroCount = document.querySelector('#hero-project-count');
 let slideIndex = 0;

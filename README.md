@@ -35,6 +35,12 @@ If an inbox-based form is preferred later, connect a verified email address to a
 
 The homepage is the visual introduction and estimate destination. Primary navigation now opens focused pages instead of stacking every feature into one long scroll: `services.html`, `work.html`, `designs.html`, `team.html`, and `reviews.html`. Each focused page keeps the same header, visual system, owner-supplied project photography, and a direct link back to the homepage estimate form.
 
+## Adding content
+
+Drop homepage rotation photos into `content/photos/homepage`, project photos into `content/photos/work`, design images into `content/photos/designs`, and videos into `content/video`. Run `npm run build`; the build creates `dist/content/media.json`, and the browser loads those folders automatically. Use unique filenames and include only photos you own or are authorized to publish.
+
+To refresh reviews weekly, edit `content/reviews/reviews.json` with the latest verified excerpts, update the `updated` date, then run `npm test`, `npm run build`, and push `main`. Google does not provide a dependable unauthenticated live feed for a static site, so review text must be verified before adding it.
+
 ## Editing
 
 - Content, phone, service area, SEO: `index.html`
