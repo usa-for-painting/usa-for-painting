@@ -111,6 +111,30 @@ if (heroPhoto && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
   }, 5000);
 }
 
+const featurePhoto = document.querySelector('.feature-hero-image > img');
+if (featurePhoto && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  let featureIndex = 0;
+  const featureImages = [
+    'content/photos/work/exterior.jpg',
+    'content/photos/work/residential.jpg',
+    'content/photos/work/interior.jpg',
+    'content/photos/work/google-profile-photo.jpg',
+    'content/photos/work/restaurant.jpg',
+    'content/photos/work/project-deck-complete.jpg'
+  ];
+  featureImages.forEach(imagePath => { const image = new Image(); image.src = imagePath; });
+  window.setInterval(() => {
+    if (document.hidden) return;
+    featureIndex = (featureIndex + 1) % featureImages.length;
+    featurePhoto.classList.add('is-switching');
+    window.setTimeout(() => {
+      featurePhoto.src = featureImages[featureIndex];
+      featurePhoto.alt = 'USA For Painting featured project photo';
+      featurePhoto.classList.remove('is-switching');
+    }, 280);
+  }, 9000);
+}
+
 document.querySelectorAll('.filter').forEach(button => {
   button.addEventListener('click', () => {
     document.querySelectorAll('.filter').forEach(item => {
