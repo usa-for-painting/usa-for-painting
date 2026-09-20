@@ -23,7 +23,9 @@ All project photos below were supplied by the owner in the workspace. Originals 
 | assets/project-room-finish.jpg | WhatsApp Image 2026-09-19 at 11.32.12 PM (5).jpeg |
 | assets/project-room-accent.jpg | WhatsApp Image 2026-09-19 at 11.32.13 PM.jpeg |
 | assets/project-room-detail.jpg | WhatsApp Image 2026-09-19 at 11.33.18 PM (1).jpeg |
-
+| assets/porch-painting.jpg | WhatsApp Image 2026-09-19 at 11.29.52 PM.jpeg |
+| assets/interior-finish.jpg | WhatsApp Image 2026-09-19 at 11.40.15 PM (6).jpeg |
+| assets/wall-preparation.jpg | WhatsApp Image 2026-09-19 at 11.40.14 PM (3).jpeg |
 
 Original logo: https://cdn.prod.website-files.com/6493adb9d886523b211bcfe7/6493afefab10c9095a8e67d3_Blue%20House%20Paint%20Store%20Logo.png
 Original favicon: https://cdn.prod.website-files.com/6493adb9d886523b211bcfe7/6493bbde9c69f3c304073bb6_favicon.png
