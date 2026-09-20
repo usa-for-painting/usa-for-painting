@@ -7,7 +7,7 @@
     "dev": "node scripts/serve.mjs",
     "start": "node scripts/serve.mjs",
     "build": "node scripts/build.mjs",
-    "test": "node scripts/check.mjs"
+    "test": "node scripts/check.mjs && node --test integrations/google-reviews/worker.test.mjs"
   },
   "engines": { "node": ">=20" }
 }

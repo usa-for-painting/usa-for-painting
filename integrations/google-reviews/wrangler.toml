@@ -1,0 +1,7 @@
+name = "usa-painting-reviews"
+main = "worker.mjs"
+compatibility_date = "2026-09-20"
+
+[vars]
+ALLOWED_ORIGIN = "https://usa-for-painting.github.io"
+# Add GOOGLE_LOCATION as accounts/ACCOUNT_ID/locations/LOCATION_ID after connecting Google.

@@ -37,7 +37,7 @@ The homepage is the visual introduction and estimate destination. Primary naviga
 
 ## Adding content
 
-Drop homepage rotation photos into `content/photos/homepage`, project photos into `content/photos/work`, design images into `content/photos/designs`, and videos into `content/video`. Run `npm run build`; the build creates `dist/content/media.json`, and the browser loads those folders automatically. Use unique filenames and include only photos you own or are authorized to publish.
+Additional homepage rotation photos can be placed in `content/photos/homepage`. The Work gallery and homepage project cards are curated in `work.html` and `index.html`, with matching source metadata in `content/projects/featured.json`; uploading files alone does not change these galleries. Keep titles, descriptions and photos consistent when editing. Design concepts stay separate on `designs.html`. Use only photos you own or are authorized to publish.
 
 To refresh reviews weekly, edit `content/reviews/reviews.json` with the latest verified excerpts, update the `updated` date, then run `npm test`, `npm run build`, and push `main`. Google does not provide a dependable unauthenticated live feed for a static site, so review text must be verified before adding it.
 
@@ -53,7 +53,7 @@ To refresh reviews weekly, edit `content/reviews/reviews.json` with the latest v
 
 No unverified review totals, insurance claims, warranties, or years of experience are published. Photos are actual supplied project images. The before/after photos show the same porch from slightly different viewpoints.
 
-The homepage leads with actual project photography and dated Google review evidence. Project viewer arrows browse the currently filtered collection; its estimate link carries the selected project into the message. Video chapter buttons seek within the existing 30-second film. Neither interaction submits customer information automatically.
+The homepage leads with actual project photography and dated Google review evidence. Project viewer arrows browse the currently filtered collection; its estimate link carries the selected project into the message. Video chapter buttons seek within the 60-second brand film. Neither interaction submits customer information automatically.
 
 ## Hosting later
 

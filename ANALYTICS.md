@@ -1,6 +1,6 @@
 # Visitor and enquiry reporting
 
-Status: prepared, not collecting. Add your Google Analytics 4 Measurement ID to `content/analytics.json`, then deploy. No visitor counts or past traffic can be recovered from this integration before it is activated.
+Status: configured with the owner's Google Analytics 4 Measurement ID `G-XT2K39QKCW`. After deployment, tracking starts when a visitor allows analytics. No visitor counts or past traffic can be recovered from before activation. Confirm actual receipt in your private Google Analytics Realtime report.
 
 ## Connect your account
 

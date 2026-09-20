@@ -23,3 +23,6 @@ Published excerpts were read directly from Google, with spelling retained:
 The fuller rendered evidence is preserved in `.work/google-reviews.txt`. Jordan's review describes work at a masjid; the site labels the topic as artistic work and does not imply it was a residential project. The homepage and Reviews page now show six concise, source-labeled excerpts. The final excerpt is retained from the original company website and is labeled separately rather than presented as a Google review.
 
 The website identifies these as selected excerpts, links to all Google reviews, and shows the verification date. The rating is a dated snapshot, not a live feed. No claim that every review is five stars is made. Recheck the live listing before changing numbers. Google displayed a limited view to the unauthenticated browser; the full review collection was not exported.
+
+
+Automatic refresh integration is prepared in `integrations/google-reviews/`. It is not connected yet: `content/reviews/live.json` has an empty endpoint. Once the owner authorizes Google Business Profile and deploys the private Worker, each homepage/reviews visit requests up to 12 reviews ordered by update time, plus the current rating/count. Failed refreshes retain the dated snapshot. No credentials belong in public site files. See the integration README for activation.

@@ -1,0 +1,8 @@
+﻿import test from 'node:test';
+import assert from 'node:assert/strict';
+import worker from './worker.mjs';
+const env={GOOGLE_CLIENT_ID:'test',GOOGLE_CLIENT_SECRET:'private-test',GOOGLE_REFRESH_TOKEN:'private-refresh',GOOGLE_LOCATION:'accounts/123/locations/456'};
+const request=()=>new Request('https://example.test/reviews',{headers:{Origin:'https://usa-for-painting.github.io'}});
+test('requires configuration and rejects other origins',async()=>{assert.equal((await worker.fetch(request(),{})).status,503);assert.equal((await worker.fetch(new Request('https://example.test/reviews',{headers:{Origin:'https://other.test'}}),env)).status,403);});
+test('requests recently updated reviews and preserves low ratings',async t=>{const calls=[];t.mock.method(globalThis,'fetch',async(url,options)=>{calls.push({url,options});return Response.json(calls.length===1?{access_token:'test-token'}:{averageRating:4.8,totalReviewCount:58,reviews:[{reviewer:{displayName:'A customer'},starRating:'TWO',comment:'Needs improvement',updateTime:'2026-09-20T00:00:00Z'}]});});const response=await worker.fetch(request(),env);const data=await response.json();assert.equal(response.status,200);assert.equal(response.headers.get('cache-control'),'no-store');assert.match(calls[1].url,/orderBy=updateTime%20desc/);assert.equal(data.reviews[0].rating,2);assert.equal(data.total,58);assert.equal(data.live,true);assert.ok(!JSON.stringify(data).includes('private'));});
+test('upstream failure returns generic error without secrets',async t=>{t.mock.method(globalThis,'fetch',async()=>{throw Error('private-refresh');});const response=await worker.fetch(request(),env);assert.equal(response.status,502);assert.deepEqual(await response.json(),{error:'Reviews temporarily unavailable'});});

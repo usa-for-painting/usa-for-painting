@@ -1,0 +1,56 @@
+[
+  {
+    "image": "assets/residential.jpg",
+    "title": "Light walls. Bold contrast.",
+    "category": "Residential interior",
+    "type": "residential",
+    "description": "Soft neutral walls, white trim and black railings bring definition to a double-height living space.",
+    "alt": "Light painted walls and black staircase railings in a double-height living room",
+    "position": "center 45%"
+  },
+  {
+    "image": "assets/exterior.jpg",
+    "title": "A fresh welcome home.",
+    "category": "Exterior painting",
+    "type": "residential",
+    "description": "Light siding, contrasting shutters and crisp porch details give this home a considered finish.",
+    "alt": "Painted home exterior with cream siding, black shutters and white porch columns",
+    "position": "center 45%"
+  },
+  {
+    "image": "assets/maps-staircase-detail.jpg",
+    "title": "Every step, considered.",
+    "category": "Stairs & trim",
+    "type": "residential",
+    "description": "Black stair treads and railings against white walls and trim. A detail from our Google Maps project collection.",
+    "alt": "Black stair treads and railing with white walls and trim, from the company Google Maps profile",
+    "position": "center 65%"
+  },
+  {
+    "image": "assets/restaurant.jpg",
+    "title": "A space that welcomes.",
+    "category": "Commercial interior",
+    "type": "commercial",
+    "description": "A warm restaurant interior from our project collection, with contrasting finishes and character throughout.",
+    "alt": "Restaurant interior with warm wood details, exposed brick and dark trim",
+    "position": "center 45%"
+  },
+  {
+    "image": "assets/porch-painting.jpg",
+    "title": "Make an entrance.",
+    "category": "Porches & exterior details",
+    "type": "residential",
+    "description": "Fresh gray porch boards and railings frame a welcoming red front door.",
+    "alt": "Freshly painted gray porch and railings beside a red entry door",
+    "position": "center 45%"
+  },
+  {
+    "image": "assets/commercial.jpg",
+    "title": "Color that means business.",
+    "category": "Commercial exterior",
+    "type": "commercial",
+    "description": "A storefront with orange fascia and contrasting gray exterior finishes from our commercial project collection.",
+    "alt": "Dunkin storefront with orange fascia and gray exterior finishes",
+    "position": "center 35%"
+  }
+]

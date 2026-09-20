@@ -41,3 +41,5 @@ Company listing: https://www.google.com/maps?cid=9132234197117223065. Reviewed S
 - assets/maps-wall-preparation.jpg: owner-posted preparation photo; source https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkfPz4yjjEd8liDsN1CIawvSvqvXwrOkwtJSX2Qk_CnX9ocOEXNGnf15UVUfYcnUI3GjFQf7sOhOGDi0AzExcQx_boa4Z8872XVkp9MAOKLQT1UTYNTf79y_6V1apWfgisp4VMRmqnUArgw=s2048
 - Film preparation clips: owner-posted 20-second video (January 2025) and 55-second video (February 2026), gallery positions 1 and 7 at the time of review. Original downloads retained in .work/film60/maps/.
 - Voiceover and original music production notes: VIDEO.md.
+
+- assets/maps-staircase-detail.jpg: owner-posted staircase photo from the USA For PAINTING LLC Maps listing, gallery position 9 at review. Source: https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmcGCunn5w4ai5hyOCXUHcjfJZ6Floq5CQLOYa1qj9L7YaLFG8MO2rj4uZUNa_ZyrpbVdEHV1kz8ACZkxkjZyHfSsOnfuyptn1T-o5QiImfmne6SIL7TKAFeRNcyPdySVOXl5OIBQnf4h_8=s2048

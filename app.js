@@ -15,20 +15,56 @@ const reviewEntries = [
   { topic: 'ON THE FINISHED ROOM', quote: 'He had fixed my walls in my house drywall and he had painted it and he did a really good job.', name: 'gigi abdel', source: 'Google review' },
   { topic: 'ON CLEAN WORK', quote: 'The work team is clean in its work.', name: 'Customer excerpt', source: 'Original website review' }
 ];
+const reviewSource = 'https://www.google.com/maps?cid=9132234197117223065';
+const escapeReview = value => String(value ?? '').replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
 function reviewCard(entry) {
-  const initials = entry.name.split(' ').map(part => part[0]).join('').slice(0, 2).toUpperCase();
-  return `<figure class="review-card"><span class="review-topic">${entry.topic}</span><blockquote>“${entry.quote}”</blockquote><figcaption><span class="review-avatar" aria-hidden="true">${initials}</span><span><strong>${entry.name}</strong><small>${entry.source}</small></span><a href="https://www.google.com/maps?cid=9132234197117223065" target="_blank" rel="noopener noreferrer" aria-label="See ${entry.name}'s review source">↗</a></figcaption></figure>`;
+  const name = String(entry.name || 'Google reviewer');
+  const initials = name.split(' ').map(part => part[0] || '').join('').slice(0, 2).toUpperCase();
+  const rating = Number.isInteger(Number(entry.rating)) ? Number(entry.rating) : 0;
+  const date = entry.updated && !Number.isNaN(Date.parse(entry.updated)) ? new Date(entry.updated).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '';
+  const quote = entry.quote || (rating >= 1 && rating <= 5 ? `Rated this business ${rating} out of 5.` : 'Read this review on Google.');
+  return `<figure class="review-card"><span class="review-topic">${escapeReview(entry.topic || 'CUSTOMER FEEDBACK')}</span>${rating >= 1 && rating <= 5 ? `<span class="review-score" aria-label="${rating} out of 5 stars">${'&#9733;'.repeat(rating)}${'&#9734;'.repeat(5-rating)}</span>` : ''}<blockquote>&ldquo;${escapeReview(quote)}&rdquo;</blockquote><figcaption><span class="review-avatar" aria-hidden="true">${escapeReview(initials)}</span><span><strong>${escapeReview(name)}</strong><small>${escapeReview(entry.source || 'Google review')}${date ? ' &middot; '+date : ''}</small></span><a href="${reviewSource}" target="_blank" rel="noopener noreferrer" aria-label="Read ${escapeReview(name)}'s review on Google">&#8599;</a></figcaption></figure>`;
 }
 const homepageReviews = document.querySelector('.featured-comments');
-function renderReviews(entries) {
-  const reviewWall = document.title.startsWith('Reviews') ? document.querySelector('.feature-grid') : null;
-  if (reviewWall) reviewWall.innerHTML = entries.map(reviewCard).join('');
-  if (homepageReviews) homepageReviews.innerHTML = `${entries.slice(0, 2).map(reviewCard).join('')}<p class="reviews-note">Selected excerpts from the latest review update. <a href="https://www.google.com/maps?cid=9132234197117223065" target="_blank" rel="noopener noreferrer">Read all reviews on Google ↗</a></p>`;
+const reviewWall = document.title.startsWith('Reviews') ? document.querySelector('.feature-grid') : null;
+function renderReviews(entries, note = 'Selected reviews. Read the full history on Google.') {
+  if (reviewWall) reviewWall.innerHTML = entries.map(reviewCard).join('') || '<p>No reviews are available to display. Visit our Google profile for the latest information.</p>';
+  if (homepageReviews) homepageReviews.innerHTML = `${entries.slice(0, 2).map(reviewCard).join('')}<p class="reviews-note">${escapeReview(note)} <a href="${reviewSource}" target="_blank" rel="noopener noreferrer">Read all reviews on Google &#8599;</a></p>`;
+  let status = document.querySelector('.reviews-live-status');
+  if (!status && reviewWall) { status = document.createElement('p'); status.className = 'reviews-live-status'; status.setAttribute('role','status'); reviewWall.before(status); }
+  if (status) status.textContent = note;
 }
-renderReviews(reviewEntries);
-fetch('content/reviews/reviews.json').then(response => response.ok ? response.json() : null).then(data => {
-  if (data?.reviews?.length) renderReviews(data.reviews);
-}).catch(() => {});
+function updateReviewSummary(data, live) {
+  const rating = Number(data.rating), total = Number(data.total);
+  if (!Number.isFinite(rating) || rating < 1 || rating > 5 || !Number.isInteger(total) || total < 0) return;
+  const ratingText = rating.toFixed(1), note = live ? 'Updated from Google on this visit' : 'Snapshot checked '+(data.updated || 'September 20, 2026');
+  document.querySelectorAll('.google-summary strong,[data-review-rating]').forEach(element => { element.textContent = ratingText; });
+  const summary = document.querySelector('.google-summary p'); if (summary) summary.textContent = `${total} Google reviews - ${note}`;
+  document.querySelectorAll('.rating-stars').forEach(element => element.setAttribute('aria-label',`${ratingText} out of 5 stars`));
+  const heroRating = document.querySelector('.hero-review strong'); if (heroRating) heroRating.textContent = `${ratingText} / 5 on Google`;
+  const heroNote = document.querySelector('.hero-review small'); if (heroNote) heroNote.textContent = `${total} reviews - ${note}`;
+  const pageNote = document.querySelector('[data-review-summary]'); if (pageNote) pageNote.textContent = `${total} Google reviews. ${note}. Read the complete review history on Google.`;
+}
+let reviewRequest = 0;
+async function loadReviews() {
+  if (!homepageReviews && !reviewWall) return;
+  const request = ++reviewRequest;
+  let snapshot = {reviews:reviewEntries,updated:'2026-09-20',rating:4.9,total:57};
+  try { const response = await fetch('content/reviews/reviews.json',{cache:'no-store'}); if(response.ok) snapshot={...snapshot,...await response.json()}; } catch {}
+  if (request !== reviewRequest) return;
+  renderReviews(snapshot.reviews,`Selected review excerpts, checked ${snapshot.updated}.`); updateReviewSummary(snapshot,false);
+  try {
+    const configResponse=await fetch('content/reviews/live.json',{cache:'no-store'});if(!configResponse.ok)return;
+    const config=await configResponse.json();if(!config.endpoint)return;
+    const endpoint=new URL(config.endpoint);if(endpoint.protocol!=='https:')return;
+    const response=await fetch(endpoint.href,{cache:'no-store',credentials:'omit',referrerPolicy:'no-referrer',signal:AbortSignal.timeout(20000)});if(!response.ok)throw Error('Reviews unavailable');
+    const data=await response.json();if(!data.live||!Array.isArray(data.reviews))throw Error('Invalid response');if(request!==reviewRequest)return;
+    renderReviews(data.reviews,'Recently updated Google reviews, refreshed on this visit.');updateReviewSummary(data,true);
+  } catch { if(request===reviewRequest)renderReviews(snapshot.reviews,`Showing selected reviews checked ${snapshot.updated}; live refresh is temporarily unavailable.`); }
+}
+renderReviews(reviewEntries,'Selected review excerpts, checked September 20, 2026.');
+loadReviews();
+window.addEventListener('pageshow',event=>{if(event.persisted)loadReviews();});
 
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('#navigation');
@@ -60,40 +96,36 @@ const heroPhoto = document.querySelector('#hero-project-photo');
 let heroSlides = [
   {
     "image": "assets/residential.jpg",
-    "alt": "Interior painting project with light walls, white trim and black stair railings",
-    "caption": "Interior painting.\nWalls, trim & stair details."
+    "alt": "Light painted walls and black staircase railings in a double-height living room",
+    "caption": "Residential interior.\nLight walls. Bold contrast."
   },
   {
-    "image": "assets/hero-house.jpg",
-    "alt": "Painter working on the shutters of a large home exterior",
-    "caption": "Exterior painting.\nSiding, shutters & trim."
+    "image": "assets/exterior.jpg",
+    "alt": "Painted home exterior with cream siding, black shutters and white porch columns",
+    "caption": "Exterior painting.\nA fresh welcome home."
+  },
+  {
+    "image": "assets/maps-staircase-detail.jpg",
+    "alt": "Black stair treads and railing with white walls and trim, from the company Google Maps profile",
+    "caption": "Stairs & trim.\nEvery step, considered."
+  },
+  {
+    "image": "assets/restaurant.jpg",
+    "alt": "Restaurant interior with warm wood details, exposed brick and dark trim",
+    "caption": "Commercial interior.\nA space that welcomes."
   },
   {
     "image": "assets/porch-painting.jpg",
-    "alt": "Fresh gray porch boards, painted railings and a red entry door",
-    "caption": "Porch painting.\nA fresh finish underfoot."
+    "alt": "Freshly painted gray porch and railings beside a red entry door",
+    "caption": "Porches & exterior details.\nMake an entrance."
   },
   {
-    "image": "assets/interior-finish.jpg",
-    "alt": "Fresh light walls and white baseboards in a residential room",
-    "caption": "Freshly painted walls.\nClean lines at every corner."
-  },
-  {
-    "image": "assets/project-commercial-wide.jpg",
-    "alt": "Commercial storefront painting in progress with masked windows and orange fascia",
-    "caption": "Commercial painting.\nCareful masking. Bold color."
-  },
-  {
-    "image": "assets/trim.jpg",
-    "alt": "Black staircase treads with contrasting white risers and trim",
-    "caption": "Stair & trim painting.\nThe details make the difference."
+    "image": "assets/commercial.jpg",
+    "alt": "Dunkin storefront with orange fascia and gray exterior finishes",
+    "caption": "Commercial exterior.\nColor that means business."
   }
 ];
-function renderManagedGallery(images, label) {
-  const gallery = document.querySelector('.feature-gallery');
-  if (!gallery || !images?.length) return;
-  gallery.innerHTML = images.map((image, index) => `<figure><img src="${image}" alt="USA For Painting ${label} project ${index + 1}" loading="lazy"><figcaption>${label} project ${String(index + 1).padStart(2, '0')} <small>Original project photo</small></figcaption></figure>`).join('');
-}
+
 fetch('content/media.json').then(response => response.ok ? response.json() : null).then(media => {
   if (media?.homepage?.length) {
     const existingPhotos = new Set(['google-profile-photo.jpg','hero-house.jpg','project-commercial-wide.jpg','project-deck-complete.jpg','project-room-accent.jpg','project-room-finish.jpg','residential.jpg','restaurant.jpg']);
@@ -101,8 +133,6 @@ fetch('content/media.json').then(response => response.ok ? response.json() : nul
     heroSlides = heroSlides.concat(additions.map(image => ({ image, alt: 'USA For Painting uploaded project photo', caption: 'From our project collection.\nSee the work up close.' })));
     heroSlides.forEach(slide => { const image = new Image(); image.src = slide.image; });
   }
-  if (document.title.startsWith('Our Work')) renderManagedGallery(media?.work, 'Project');
-  if (document.title.startsWith('Custom Paint Designs')) renderManagedGallery(media?.designs, 'Design');
   const filmSource = document.querySelector('#brand-film source');
   if (filmSource && document.querySelector('#brand-film').dataset.managedVideo === 'true' && media?.video?.length) {
     filmSource.src = media.video[0];
@@ -133,30 +163,6 @@ if (heroPhoto && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     if (document.hidden) return;
     showHeroSlide(slideIndex + 1);
   }, 5000);
-}
-
-const featurePhoto = document.querySelector('.feature-hero-image > img');
-if (featurePhoto && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  let featureIndex = 0;
-  const featureImages = [
-    'content/photos/work/exterior.jpg',
-    'content/photos/work/residential.jpg',
-    'content/photos/work/interior.jpg',
-    'content/photos/work/google-profile-photo.jpg',
-    'content/photos/work/restaurant.jpg',
-    'content/photos/work/project-deck-complete.jpg'
-  ];
-  featureImages.forEach(imagePath => { const image = new Image(); image.src = imagePath; });
-  window.setInterval(() => {
-    if (document.hidden) return;
-    featureIndex = (featureIndex + 1) % featureImages.length;
-    featurePhoto.classList.add('is-switching');
-    window.setTimeout(() => {
-      featurePhoto.src = featureImages[featureIndex];
-      featurePhoto.alt = 'USA For Painting featured project photo';
-      featurePhoto.classList.remove('is-switching');
-    }, 280);
-  }, 9000);
 }
 
 document.querySelectorAll('.filter').forEach(button => {

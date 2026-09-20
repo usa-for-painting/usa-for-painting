@@ -35,7 +35,8 @@
         else if (href.endsWith('#estimate')) emit('estimate_click', { link_location: link.closest('header') ? 'header' : link.closest('.mobile-contact') ? 'mobile_bar' : 'page' });
         else if (link.hasAttribute('download')) emit('film_download');
       }
-      if (event.target.closest('.project-card')) emit('project_view', { project_name: event.target.closest('.project-card').dataset.title || 'Project' });
+      const project = event.target.closest('.project-card, .portfolio-open');
+      if (project) emit('project_view', { project_name: project.dataset.title || 'Project' });
     });
     document.querySelector('#estimate-form')?.addEventListener('submit', () => emit('estimate_prepared', { method: 'message_preview' }));
     const video = document.querySelector('#brand-film');
@@ -68,7 +69,7 @@
     document.addEventListener('visibilitychange', () => { if (document.hidden) flush(); else { last = performance.now(); activity = last; } });
     window.addEventListener('pagehide', flush);
   }
-  fetch('content/analytics.json').then(response => response.ok ? response.json() : null).then(config => {
+  fetch('content/analytics.json', { cache: 'no-store' }).then(response => response.ok ? response.json() : null).then(config => {
     if (!/^G-[A-Z0-9]+$/.test(config?.measurementId || '')) return;
     measurementId = config.measurementId;
     banner = document.createElement('aside'); banner.className = 'analytics-choice'; banner.setAttribute('aria-label', 'Website analytics preferences');
